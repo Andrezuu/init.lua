@@ -76,6 +76,7 @@ vim.keymap.set("n", "]d", function()
 end, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, { desc = "[H]over on current symbol" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -797,6 +798,34 @@ require("lazy").setup({
 			},
 			indent = { enable = true, disable = { "ruby" } },
 		},
+
+		{
+			"Theprimeagen/harpoon",
+			branch = "harpoon2",
+			dependencies = { "nvim-lua/plenary.nvim" },
+			config = function()
+				local harpoon = require("harpoon")
+
+				harpoon:setup()
+
+				vim.keymap.set("n", "<leader>a", function()
+					harpoon:list():add()
+				end)
+
+				vim.keymap.set("n", "<C-e>", function()
+					harpoon.ui:toggle_quick_menu(harpoon:list())
+				end)
+
+				-- Toggle previous & next buffers stored within Harpoon list
+				vim.keymap.set("n", "<C-h>", function()
+					harpoon:list():prev()
+				end)
+				vim.keymap.set("n", "<C-t>", function()
+					harpoon:list():next()
+				end)
+			end,
+		},
+
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
 		--
