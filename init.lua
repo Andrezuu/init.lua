@@ -8,6 +8,12 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.showmode = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.softtabstop = 4
+vim.opt.colorcolumn = "80,100"
+vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 0, bg = "#f2f2f2" })
 
 vim.keymap.set("n", "<leader>", "")
 vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
@@ -238,10 +244,12 @@ require("lazy").setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
+				defaults = {
+					file_ignore_patterns = { "node_modules", "package.json", "package-lock.json" },
+				},
+				-- mappings = {
+				--   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+				-- },
 				-- },
 				-- pickers = {}
 				extensions = {
@@ -712,6 +720,15 @@ require("lazy").setup({
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
 		"folke/tokyonight.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
+		opts = {
+			style = "night",
+			transparent = true,
+			terminal_colors = true,
+			styles = {
+				sidebars = "transparent",
+				-- floats = "transparent",
+			},
+		},
 		init = function()
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
@@ -720,6 +737,9 @@ require("lazy").setup({
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
+			-- Asegurarse que el fondo es transparente
+			vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
 		end,
 	},
 
